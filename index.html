@@ -10,116 +10,96 @@
             --mc-green: #55ff55; --mc-gold: #ffff55; --mc-purple: #c649ff;
             --mc-red: #ae1818; --mc-blue: #55ffff; --mc-border: #000000;
             --cake-base: #f1c40f; --cake-frosting: #fff; --cake-top: #e74c3c;
-            --candle-red: #e74c3c; --candle-wicks: #3c3c3c;
         }
-        * { box-sizing: border-box; image-rendering: pixelated; -webkit-font-smoothing: none; -webkit-tap-highlight-color: transparent; }
+        * { box-sizing: border-box; image-rendering: pixelated; }
         body, html {
             margin: 0; padding: 0; background-color: var(--mc-red);
             background-image: linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px), linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px);
             background-size: 4px 4px; color: #fff; font-family: 'Press Start 2P', cursive; overflow-x: hidden;
         }
         .container { display: flex; flex-direction: column; align-items: center; padding: 40px 15px 140px 15px; min-height: 100vh; }
-        .player-tag { font-size: 0.75rem; margin-bottom: 8px; text-shadow: 2px 2px 0 var(--mc-border); }
-        .player-tag span { color: var(--mc-green); }
-        .exp-bar { width: 85%; max-width: 280px; height: 10px; background: #1a1a1a; border: 2px solid var(--mc-border); margin-bottom: 12px; }
-        .exp-progress { width: 100%; height: 100%; background: linear-gradient(to bottom, #7cfc00, #32cd32); box-shadow: inset 0 2px 0 rgba(255,255,255,0.3); }
-        .lvl-display { font-size: 1.8rem; color: #fff; text-shadow: 3px 3px 0 var(--mc-border); animation: enchantment-pulse 2.5s infinite ease-in-out; margin-bottom: 30px; }
-        @keyframes enchantment-pulse { 0%, 100% { filter: drop-shadow(0 0 2px var(--mc-purple)); } 50% { filter: drop-shadow(0 0 12px var(--mc-purple)); color: var(--mc-gold); } }
+        .player-tag { font-size: 0.75rem; margin-bottom: 8px; text-shadow: 2px 2px 0 #000; }
+        .exp-bar { width: 85%; max-width: 280px; height: 10px; background: #1a1a1a; border: 2px solid #000; margin-bottom: 12px; }
+        .exp-progress { width: 100%; height: 100%; background: #7cfc00; }
+        .lvl-display { font-size: 1.8rem; text-shadow: 3px 3px 0 #000; animation: glow 2s infinite; margin-bottom: 40px; }
+        @keyframes glow { 0%, 100% { filter: drop-shadow(0 0 2px var(--mc-purple)); } 50% { filter: drop-shadow(0 0 10px var(--mc-purple)); } }
 
-        /* --- 完美对齐的像素蛋糕 --- */
-        .cake-container {
+        /* --- 暴力修正版蛋糕：所有东西都相对于蛋糕底部 --- */
+        .cake-box {
             position: relative; width: 100px; height: 100px; margin: 20px 0;
-            display: flex; justify-content: center;
         }
-        .cake-body {
-            position: absolute; bottom: 0; width: 100px; height: 45px;
-            background: var(--cake-base); border: 4px solid var(--mc-border);
-            box-shadow: inset -6px -6px 0 rgba(0,0,0,0.1);
+        /* 蛋糕主体 */
+        .cake-main {
+            position: absolute; bottom: 0; width: 100px; height: 40px;
+            background: var(--cake-base); border: 4px solid #000; z-index: 2;
         }
-        .cake-frosting-layer {
+        /* 奶油层 */
+        .cake-cream {
             position: absolute; top: -12px; left: -4px; width: 100px; height: 12px;
-            background: var(--cake-frosting); border: 4px solid var(--mc-border);
-            border-bottom: none;
+            background: #fff; border: 4px solid #000; border-bottom: none;
         }
-        .cake-body::after {
-            content: ''; position: absolute; top: 12px; left: 10px; width: 70px; height: 20px;
-            background-image: radial-gradient(var(--cake-top) 3px, transparent 3px);
-            background-size: 18px 18px;
+        /* 蜡烛：这次直接定位在奶油上方 1px */
+        .candle-group {
+            position: absolute; bottom: 38px; left: 0; width: 100px;
+            display: flex; justify-content: space-around; z-index: 1;
         }
-
-        /* --- 蜡烛位置修正：扎进蛋糕里 --- */
-        .candles-box {
-            position: absolute; top: -22px; width: 44px; height: 30px;
-            display: flex; justify-content: space-between; z-index: 10;
+        .mc-candle {
+            position: relative; width: 10px; height: 25px; 
+            background: #e74c3c; border: 3px solid #000;
         }
-        .candle-stick {
-            position: relative; width: 8px; height: 24px; 
-            background: var(--candle-red); border: 2px solid var(--mc-border);
+        .mc-candle::after {
+            content: attr(data-val); position: absolute; top: 2px; width: 100%;
+            text-align: center; font-size: 8px; color: #fff;
         }
-        .candle-stick::before {
-            content: attr(data-num); position: absolute; top: 2px; width: 100%;
-            text-align: center; font-size: 7px; color: #fff; font-weight: bold;
-        }
-        .flame-pix {
+        /* 火焰：就在蜡烛头顶 */
+        .mc-flame {
             position: absolute; top: -14px; left: -1px; width: 6px; height: 8px;
-            background: var(--mc-gold); border: 2px solid var(--mc-border);
-            animation: flicker 0.3s infinite alternate;
+            background: var(--mc-gold); border: 2px solid #000;
+            animation: burn 0.2s infinite alternate;
         }
-        @keyframes flicker {
-            from { transform: scaleY(1); } to { transform: scaleY(1.2); background: #ffaa00; }
-        }
+        @keyframes burn { from { transform: scale(1); } to { transform: scale(1.2); background: #ffa500; } }
 
-        /* --- UI 细节 --- */
-        .achievement-toast { background: #2a2a2a; border: 4px solid var(--mc-border); padding: 15px; width: 95%; max-width: 360px; display: flex; align-items: center; margin: 20px 0; border-style: ridge; }
-        .earth-icon { width: 42px; height: 42px; background: #222 url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAV0lEQVRYR+2XMQ4AIQwDaf//mS5MDKS05S5w7ZIIAhIURZfE6pYA9u455+S7Z455f845+X5/zhkX4P6fc8YFuP/nnHEB7v85Z1yA+3/OGRfghvI9Ab5fM6m7Fv5RAAAAAElFTkSuQmCC') center/cover; border: 3px solid #fff; flex-shrink: 0; margin-right: 15px; filter: drop-shadow(0 0 5px var(--mc-blue)); }
-        .toast-title { color: var(--mc-gold); font-size: 0.6rem; margin: 0; }
-        .toast-desc { color: #fff; font-size: 0.55rem; margin: 6px 0 0 0; line-height: 1.4; }
-        .cmd-panel { background: rgba(0,0,0,0.85); border-left: 5px solid var(--mc-gold); padding: 18px; width: 95%; max-width: 360px; font-size: 0.55rem; line-height: 1.8; }
-        .cmd-line { color: #888; margin-bottom: 4px; }
-        .hl-green { color: var(--mc-green); } .hl-blue { color: var(--mc-blue); } .hl-pink { color: var(--mc-purple); }
-
-        .hotbar-wrap { position: fixed; bottom: 20px; width: 90%; max-width: 380px; background: #8b8b8b; border: 4px solid #1e1e1e; padding: 4px; display: flex; left: 50%; transform: translateX(-50%); }
-        .hotbar-slot { flex: 1; background: #3c3c3c; border: 3px solid var(--mc-border); color: #fff; text-decoration: none; text-align: center; padding: 18px 5px; font-size: 0.75rem; text-shadow: 2px 2px 0 var(--mc-border); }
-        .footer-text { font-size: 0.5rem; color: #777; margin: 25px 0; text-align: center; }
+        .achievement { background: #2a2a2a; border: 4px solid #000; padding: 15px; width: 95%; max-width: 360px; display: flex; margin: 20px 0; }
+        .icon { width: 40px; height: 40px; background: #444; border: 2px solid #fff; margin-right: 15px; }
+        .cmd { background: rgba(0,0,0,0.8); border-left: 4px solid var(--mc-gold); padding: 15px; width: 95%; max-width: 360px; font-size: 0.55rem; line-height: 1.8; }
+        .hotbar { position: fixed; bottom: 20px; width: 90%; max-width: 380px; background: #8b8b8b; border: 4px solid #000; display: flex; left: 50%; transform: translateX(-50%); }
+        .slot { flex: 1; background: #3c3c3c; color: #fff; text-decoration: none; text-align: center; padding: 15px; font-size: 0.7rem; border: 2px solid #000; }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="player-tag">&lt;<span>Player: Davide</span>&gt;</div>
+        <div class="player-tag">&lt;Player: Davide&gt;</div>
         <div class="exp-bar"><div class="exp-progress"></div></div>
         <div class="lvl-display">Lvl.18</div>
 
-        <div class="cake-container">
-            <div class="candles-box">
-                <div class="candle-stick" data-num="1"><div class="flame-pix"></div></div>
-                <div class="candle-stick" data-num="8"><div class="flame-pix"></div></div>
+        <div class="cake-box">
+            <div class="candle-group">
+                <div class="mc-candle" data-val="1"><div class="mc-flame"></div></div>
+                <div class="mc-candle" data-val="8"><div class="mc-flame"></div></div>
             </div>
-            <div class="cake-body">
-                <div class="cake-frosting-layer"></div>
-            </div>
-        </div>
-
-        <div class="achievement-toast">
-            <div class="earth-icon"></div>
-            <div class="advancement-text">
-                <h2 class="toast-title">进阶: 地球 Online</h2>
-                <p class="toast-desc">玩家已解锁: [ 成人阶段 ]<br>主线任务同步中...</p>
+            <div class="cake-main">
+                <div class="cake-cream"></div>
             </div>
         </div>
 
-        <div class="cmd-panel">
-            <div class="cmd-line">>> /connect <span class="hl-blue">EARTH_ONLINE_SERVER</span></div>
-            <div class="cmd-line">>> /gamemode <span style="color:#ff5555;">survival</span></div>
-            <div class="cmd-line">> /mission <span class="hl-green">庆祝 Player:Davide 抵达 Lvl.18</span></div>
-            <div class="cmd-line">> /locate <span class="hl-blue">V. Emerico Amari, 53, Palermo</span></div>
-            <div class="cmd-line">> /time <span class="hl-pink">2026.04.11 | 20:30</span></div>
-            <div class="cmd-line">> /give <span class="hl-green">@all</span> birthday_cake 1</div>
+        <div class="achievement">
+            <div class="icon"></div>
+            <div>
+                <div style="color:var(--mc-gold); font-size:0.6rem;">进阶: 地球 Online</div>
+                <div style="font-size:0.5rem; margin-top:5px;">玩家已解锁: [ 成人阶段 ]</div>
+            </div>
         </div>
-        <p class="footer-text">RSVP WeChat: wx_3317847554</p>
+
+        <div class="cmd">
+            <div>>> /connect <span style="color:var(--mc-blue)">EARTH_SERVER</span></div>
+            <div>>> /gamemode survival</div>
+            <div>> /locate <span style="color:var(--mc-blue)">V. Emerico Amari, 53</span></div>
+            <div>> /time 2026.04.11 | 20:30</div>
+            <div>> /give @all birthday_cake 1</div>
+        </div>
     </div>
-
-    <div class="hotbar-wrap">
-        <a href="https://maps.app.goo.gl/no5TBBPP844mTQhY6?g_st=ic" target="_blank" class="hotbar-slot">[ 前往任务坐标 (GPS) ]</a>
+    <div class="hotbar">
+        <a href="https://maps.app.goo.gl/no5TBBPP844mTQhY6?g_st=ic" class="slot">[ 点击开启导航 GPS ]</a>
     </div>
 </body>
 </html>
