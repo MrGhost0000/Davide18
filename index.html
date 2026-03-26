@@ -10,7 +10,7 @@
             --mc-green: #55ff55; --mc-gold: #ffff55; --mc-purple: #c649ff;
             --mc-red: #ae1818; --mc-blue: #55ffff; --mc-border: #000000;
         }
-        * { box-sizing: border-box; image-rendering: pixelated; -webkit-font-smoothing: none; }
+        * { box-sizing: border-box; image-rendering: pixelated; -webkit-font-smoothing: none; -webkit-tap-highlight-color: transparent; }
         body, html {
             margin: 0; padding: 0; background-color: var(--mc-red);
             background-image: linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px), linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px);
@@ -44,9 +44,9 @@
 </head>
 <body>
     <div class="container">
-        <div class="player-tag">&lt;<span>Player: Davide</span>&gt;</div>
+        <div class="player-tag"><<span>Player: Davide</span>></div>
         <div class="exp-bar"><div class="exp-progress"></div></div>
-        <div class="lvl-display">Lvl18</div>
+        <div class="lvl-display">Lvl.18</div>
         <div class="hotpot-voxel">
             <div class="steam s1"></div><div class="steam s2"></div><div class="steam s3"></div>
             <div class="pot-base"><div class="pot-soup"></div></div>
@@ -61,7 +61,7 @@
         <div class="cmd-panel">
             <div class="cmd-line">>> /connect <span class="hl-blue">EARTH_ONLINE_SERVER</span></div>
             <div class="cmd-line">>> /gamemode <span style="color:#ff5555;">survival</span></div>
-            <div class="cmd-line">> /mission <span class="hl-green">庆祝 Player:Davide 抵达 18 级</span></div>
+            <div class="cmd-line">> /mission <span class="hl-green">庆祝 Player:Davide 抵达 Lvl.18</span></div>
             <div class="cmd-line">> /locate <span class="hl-blue">V. Emerico Amari, 53, Palermo</span></div>
             <div class="cmd-line">> /time <span class="hl-pink">2026.04.11 | 20:30 (入场)</span></div>
             <div class="cmd-line">> /give <span class="hl-green">@all</span> hotpot_buff 64</div>
