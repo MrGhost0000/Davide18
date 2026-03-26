@@ -17,35 +17,80 @@
             background-size: 4px 4px; color: #fff; font-family: 'Press Start 2P', cursive; overflow-x: hidden;
         }
         .container { display: flex; flex-direction: column; align-items: center; padding: 40px 15px 140px 15px; min-height: 100vh; }
-        .lvl-display { font-size: 1.8rem; text-shadow: 3px 3px 0 #000; animation: glow 2s infinite; margin-bottom: 30px; }
-        @keyframes glow { 0%, 100% { filter: drop-shadow(0 0 2px var(--mc-purple)); } 50% { filter: drop-shadow(0 0 10px var(--mc-purple)); } }
+        
+        /* --- 附魔流光 Lvl.18 (保持现状) --- */
+        .lvl-display {
+            font-size: 1.8rem; margin-bottom: 30px;
+            background: linear-gradient(135deg, #fff 25%, var(--mc-purple) 40%, #fff 50%, var(--mc-purple) 60%, #fff 75%);
+            background-size: 200% auto; -webkit-background-clip: text; background-clip: text; color: transparent;
+            filter: drop-shadow(2px 2px 0px #000) drop-shadow(0 0 8px rgba(198, 73, 255, 0.9));
+            animation: enchant-shimmer 2s linear infinite;
+        }
+        @keyframes enchant-shimmer { to { background-position: 200% center; } }
 
-        /* --- 修正后的蛋糕组件 --- */
-        .cake-wrapper { position: relative; width: 100px; margin: 20px 0; display: flex; flex-direction: column; align-items: center; }
-        .candle-row { display: flex; justify-content: space-around; width: 60px; margin-bottom: -4px; z-index: 10; }
-        .candle { position: relative; width: 10px; height: 25px; background: #e74c3c; border: 3px solid #000; }
-        .candle::after { content: attr(data-v); position: absolute; top: 2px; width: 100%; text-align: center; font-size: 8px; }
-        .flame { position: absolute; top: -14px; left: -1px; width: 6px; height: 8px; background: #ffff55; border: 2px solid #000; animation: burn 0.2s infinite alternate; }
-        @keyframes burn { from { transform: scale(1); } to { transform: scale(1.2); } }
-        .cake-main { width: 100px; height: 45px; background: #f1c40f; border: 4px solid #000; position: relative; }
-        .cake-cream { position: absolute; top: -12px; left: -4px; width: 100px; height: 12px; background: #fff; border: 4px solid #000; border-bottom: none; }
+        /* --- ✨ 终极稳固版：Minecraft 蛋糕 --- */
+        .cake-box {
+            position: relative; width: 120px; height: 80px; 
+            margin: 20px 0; display: flex; flex-direction: column; align-items: center;
+        }
 
-        /* --- 进阶面板 --- */
-        .achievement { background: #2a2a2a; border: 4px solid #000; padding: 15px; width: 95%; max-width: 360px; display: flex; margin: 20px 0; border-style: ridge; box-shadow: 0 0 0 4px #2a2a2a, 0 0 0 8px #888; }
-        .ach-icon { width: 40px; height: 40px; border: 4px solid #fff; margin-right: 15px; flex-shrink: 0; box-shadow: 0 0 10px rgba(255,255,255,0.3); }
+        /* 蜡烛：直接定位在蛋糕上方 */
+        .candle-container {
+            display: flex; justify-content: space-around; width: 60px; margin-bottom: -2px; z-index: 5;
+        }
+        .mc-candle {
+            width: 10px; height: 30px; background: #e74c3c; border: 3px solid #000; position: relative;
+        }
+        .mc-candle::after { 
+            content: attr(data-v); position: absolute; top: 2px; width: 100%; text-align: center; 
+            font-size: 8px; color: #fff; text-shadow: 1px 1px #000;
+        }
+        .flame {
+            position: absolute; top: -14px; left: -1px; width: 6px; height: 10px;
+            background: var(--mc-gold); border: 2px solid #000; animation: flicker 0.2s infinite alternate;
+        }
+        @keyframes flicker { from { transform: scaleY(1); } to { transform: scaleY(1.3); } }
 
-        /* --- 控制台：严格按照你的截图颜色和文字 --- */
-        .cmd-panel { background: #1a0f0f; border-left: 6px solid var(--mc-gold); padding: 20px; width: 95%; max-width: 360px; font-size: 0.55rem; line-height: 2.2; margin-top: 10px; }
-        .c-gray { color: #888; }
-        .c-blue { color: var(--mc-blue); }
-        .c-red { color: #ff5555; }
-        .c-green { color: var(--mc-green); }
-        .c-purple { color: #ff55ff; }
+        /* 蛋糕本体：分层堆叠，绝不散架 */
+        .cake-body {
+            width: 100px; height: 50px; border: 4px solid #000; position: relative;
+            background: #f1c40f; /* 蛋糕胚颜色 */
+            overflow: hidden;
+        }
+        /* 顶部奶油 */
+        .cake-frosting {
+            position: absolute; top: 0; left: 0; width: 100%; height: 15px;
+            background: #fff; border-bottom: 4px solid #000;
+        }
+        /* 奶油流下来的像素感 */
+        .cake-frosting::after {
+            content: ''; position: absolute; bottom: -12px; left: 10px;
+            width: 8px; height: 8px; background: #fff;
+            box-shadow: 20px 0 0 #fff, 50px 0 0 #fff, 70px 0 0 #fff;
+            border: 4px solid #000; border-top: none;
+        }
+        /* 草莓装饰 */
+        .dots {
+            position: absolute; top: 4px; left: 10px; width: 6px; height: 6px;
+            background: #ff5555; box-shadow: 25px 0 0 #ff5555, 55px 0 0 #ff5555, 75px 0 0 #ff5555;
+        }
 
-        /* --- 任务栏：恢复经典比例 --- */
-        .hotbar-wrap { position: fixed; bottom: 30px; width: 340px; background: #8b8b8b; border: 4px solid #1e1e1e; padding: 2px; display: flex; left: 50%; transform: translateX(-50%); z-index: 100; }
-        .hotbar-slot { flex: 1; background: #3c3c3c; border: 4px solid #1e1e1e; color: #fff; text-decoration: none; display: flex; align-items: center; justify-content: center; height: 56px; padding: 0 10px; }
-        .hotbar-text { font-size: 0.5rem; text-align: center; text-shadow: 2px 2px 0 #000; line-height: 1.2; }
+        /* --- 控制台 (锁定截图内容) --- */
+        .cmd-panel { 
+            background: rgba(0,0,0,0.9); border-left: 6px solid var(--mc-gold); 
+            padding: 15px; width: 95%; max-width: 360px; font-size: 0.55rem; line-height: 2.2; 
+        }
+        .c-gray { color: #888; } .c-blue { color: var(--mc-blue); } .c-red { color: #ff5555; } .c-green { color: var(--mc-green); } .c-purple { color: #ff55ff; }
+
+        /* --- 底部任务栏 (锁定高度比例) --- */
+        .hotbar-wrap { 
+            position: fixed; bottom: 30px; width: 340px; background: #8b8b8b; 
+            border: 4px solid #1e1e1e; padding: 2px; display: flex; left: 50%; transform: translateX(-50%); z-index: 100; 
+        }
+        .hotbar-slot { 
+            flex: 1; background: #3c3c3c; border: 4px solid #1e1e1e; color: #fff; 
+            text-decoration: none; display: flex; align-items: center; justify-content: center; height: 56px; 
+        }
     </style>
 </head>
 <body>
@@ -55,23 +100,25 @@
         
         <div class="lvl-display">Lvl.18</div>
 
-        <div class="cake-wrapper">
-            <div class="candle-row">
-                <div class="candle" data-v="1"><div class="flame"></div></div>
-                <div class="candle" data-v="8"><div class="flame"></div></div>
+        <div class="cake-box">
+            <div class="candle-container">
+                <div class="mc-candle" data-v="1"><div class="flame"></div></div>
+                <div class="mc-candle" data-v="8"><div class="flame"></div></div>
             </div>
-            <div class="cake-main"><div class="cake-cream"></div></div>
+            <div class="cake-body">
+                <div class="cake-frosting"></div>
+                <div class="dots"></div>
+            </div>
         </div>
 
-        <div class="achievement">
-            <div class="ach-icon"></div>
+        <div style="background:#2a2a2a; border:4px solid #000; padding:15px; width:95%; max-width:360px; display:flex; margin:20px 0; border-style:ridge;">
+            <div style="width:40px; height:40px; border:4px solid #fff; margin-right:15px; flex-shrink:0;"></div>
             <div>
                 <div style="color:var(--mc-gold); font-size:0.6rem;">进阶: 地球 Online</div>
                 <div style="font-size:0.5rem; margin-top:8px; line-height:1.4;">玩家已解锁: [ 成人阶段 ]<br>主线任务同步中...</div>
             </div>
         </div>
 
-        <!-- 这里严格匹配你的截图 -->
         <div class="cmd-panel">
             <div><span class="c-gray">>> /connect</span> <span class="c-blue">EARTH_ONLINE_SERVER</span></div>
             <div><span class="c-gray">>> /gamemode</span> <span class="c-red">survival</span></div>
@@ -84,7 +131,7 @@
 
     <div class="hotbar-wrap">
         <a href="https://maps.app.goo.gl/no5TBBPP844mTQhY6?g_st=ic" target="_blank" class="hotbar-slot">
-            <span class="hotbar-text">[ 前往任务坐标 (GPS) ]</span>
+            <span style="font-size:0.5rem; text-align:center;">[ 前往任务坐标 (GPS) ]</span>
         </a>
     </div>
 </body>
