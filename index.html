@@ -3,135 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Lvl.18 | Davide</title>
+    <title>Davide's 18th Wanted Poster</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         :root {
-            --mc-green: #55ff55; --mc-gold: #ffff55; --mc-purple: #c649ff;
-            --mc-red: #ae1818; --mc-blue: #55ffff; --mc-border: #000000;
+            --wd-paper: #f4e4bc; --wd-ink: #3e2716; --mc-red: #ae1818; 
+            --mc-gold: #ffaa00; --mc-border: #000000;
         }
         * { box-sizing: border-box; image-rendering: pixelated; }
         body, html {
-            margin: 0; padding: 0; background-color: var(--mc-red);
-            background-image: linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px), linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px);
-            background-size: 4px 4px; color: #fff; font-family: 'Press Start 2P', cursive; overflow-x: hidden;
+            margin: 0; padding: 0; background-color: #1a1a1a;
+            background-image: radial-gradient(#333 1px, transparent 1px);
+            background-size: 15px 15px; font-family: 'Press Start 2P', cursive;
         }
-        .container { display: flex; flex-direction: column; align-items: center; padding: 40px 15px 140px 15px; min-height: 100vh; }
-        
-        /* --- 附魔流光 Lvl.18 (保持现状) --- */
-        .lvl-display {
-            font-size: 1.8rem; margin-bottom: 30px;
-            background: linear-gradient(135deg, #fff 25%, var(--mc-purple) 40%, #fff 50%, var(--mc-purple) 60%, #fff 75%);
-            background-size: 200% auto; -webkit-background-clip: text; background-clip: text; color: transparent;
-            filter: drop-shadow(2px 2px 0px #000) drop-shadow(0 0 8px rgba(198, 73, 255, 0.9));
-            animation: enchant-shimmer 2s linear infinite;
-        }
-        @keyframes enchant-shimmer { to { background-position: 200% center; } }
+        .container { display: flex; flex-direction: column; align-items: center; padding: 30px 15px 120px 15px; min-height: 100vh; }
 
-        /* --- ✨ 终极稳固版：Minecraft 蛋糕 --- */
-        .cake-box {
-            position: relative; width: 120px; height: 80px; 
-            margin: 20px 0; display: flex; flex-direction: column; align-items: center;
+        /* 📜 西部通缉令背景 */
+        .poster {
+            background: var(--wd-paper); border: 8px solid var(--mc-border);
+            width: 100%; max-width: 380px; padding: 30px 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8); position: relative;
+            border-style: ridge; text-align: center; color: var(--wd-ink);
         }
 
-        /* 蜡烛：直接定位在蛋糕上方 */
-        .candle-container {
-            display: flex; justify-content: space-around; width: 60px; margin-bottom: -2px; z-index: 5;
-        }
-        .mc-candle {
-            width: 10px; height: 30px; background: #e74c3c; border: 3px solid #000; position: relative;
-        }
-        .mc-candle::after { 
-            content: attr(data-v); position: absolute; top: 2px; width: 100%; text-align: center; 
-            font-size: 8px; color: #fff; text-shadow: 1px 1px #000;
-        }
-        .flame {
-            position: absolute; top: -14px; left: -1px; width: 6px; height: 10px;
-            background: var(--mc-gold); border: 2px solid #000; animation: flicker 0.2s infinite alternate;
-        }
-        @keyframes flicker { from { transform: scaleY(1); } to { transform: scaleY(1.3); } }
-
-        /* 蛋糕本体：分层堆叠，绝不散架 */
-        .cake-body {
-            width: 100px; height: 50px; border: 4px solid #000; position: relative;
-            background: #f1c40f; /* 蛋糕胚颜色 */
-            overflow: hidden;
-        }
-        /* 顶部奶油 */
-        .cake-frosting {
-            position: absolute; top: 0; left: 0; width: 100%; height: 15px;
-            background: #fff; border-bottom: 4px solid #000;
-        }
-        /* 奶油流下来的像素感 */
-        .cake-frosting::after {
-            content: ''; position: absolute; bottom: -12px; left: 10px;
-            width: 8px; height: 8px; background: #fff;
-            box-shadow: 20px 0 0 #fff, 50px 0 0 #fff, 70px 0 0 #fff;
-            border: 4px solid #000; border-top: none;
-        }
-        /* 草莓装饰 */
-        .dots {
-            position: absolute; top: 4px; left: 10px; width: 6px; height: 6px;
-            background: #ff5555; box-shadow: 25px 0 0 #ff5555, 55px 0 0 #ff5555, 75px 0 0 #ff5555;
+        /* [ WANTED ] 标题 */
+        .poster-title {
+            font-size: 1.8rem; color: var(--mc-red); text-shadow: 3px 3px 0 var(--mc-border);
+            margin-bottom: 20px; letter-spacing: 2px;
         }
 
-        /* --- 控制台 (锁定截图内容) --- */
-        .cmd-panel { 
-            background: rgba(0,0,0,0.9); border-left: 6px solid var(--mc-gold); 
-            padding: 15px; width: 95%; max-width: 360px; font-size: 0.55rem; line-height: 2.2; 
-        }
-        .c-gray { color: #888; } .c-blue { color: var(--mc-blue); } .c-red { color: #ff5555; } .c-green { color: var(--mc-green); } .c-purple { color: #ff55ff; }
+        /* 通缉令中间的装饰线 */
+        .divider { border-top: 4px dashed var(--wd-ink); width: 80%; margin: 15px auto; }
 
-        /* --- 底部任务栏 (锁定高度比例) --- */
-        .hotbar-wrap { 
-            position: fixed; bottom: 30px; width: 340px; background: #8b8b8b; 
-            border: 4px solid #1e1e1e; padding: 2px; display: flex; left: 50%; transform: translateX(-50%); z-index: 100; 
+        /* 邀请内容 */
+        .invitation-text { font-size: 0.65rem; line-height: 1.8; margin: 20px 0; }
+        .highlight { color: var(--mc-red); font-weight: bold; }
+
+        /* 蛋糕作为“诱饵” */
+        .cake-display {
+            width: 100px; height: 100px; background: #fff; border: 4px solid var(--mc-border);
+            margin: 15px auto; display: flex; align-items: center; justify-content: center;
+            box-shadow: 4px 4px 0 rgba(0,0,0,0.1);
         }
-        .hotbar-slot { 
-            flex: 1; background: #3c3c3c; border: 4px solid #1e1e1e; color: #fff; 
-            text-decoration: none; display: flex; align-items: center; justify-content: center; height: 56px; 
+        .mc-cake { width: 70px; height: 35px; background: #f1c40f; border: 3px solid #000; position: relative; }
+        .mc-cake::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 10px; background: #fff; border-bottom: 3px solid #000; }
+
+        /* 赏金/奖励 */
+        .reward-section { margin-top: 20px; }
+        .reward-amount { font-size: 1.2rem; color: var(--mc-gold); text-shadow: 2px 2px 0 var(--mc-border); }
+
+        /* 任务指令面板 */
+        .mission-panel {
+            background: #222; border-left: 6px solid var(--mc-gold); color: #fff;
+            padding: 15px; width: 100%; margin-top: 25px; text-align: left;
+            font-size: 0.5rem; line-height: 2;
+        }
+        .c-blue { color: #55ffff; } .c-green { color: #55ff55; }
+
+        /* 底部操作栏 */
+        .hotbar {
+            position: fixed; bottom: 30px; width: 340px; left: 50%; transform: translateX(-50%);
+            background: #8b8b8b; border: 4px solid #1e1e1e; padding: 2px; display: flex; z-index: 100;
+        }
+        .hotbar-btn {
+            flex: 1; height: 50px; background: #3c3c3c; border: 4px solid #1e1e1e;
+            color: #fff; text-decoration: none; display: flex; align-items: center; justify-content: center;
+            font-size: 0.55rem;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div style="font-size:0.75rem; color:var(--mc-green); margin-bottom:10px;">&lt;Player: Davide&gt;</div>
-        <div style="width:80%; max-width:260px; height:12px; background:#1a1a1a; border:3px solid #000; margin-bottom:15px;"><div style="width:100%; height:100%; background:linear-gradient(to right, #7cfc00, #32cd32);"></div></div>
-        
-        <div class="lvl-display">Lvl.18</div>
+        <div class="poster">
+            <div class="poster-title">WANTED</div>
+            <div style="font-size: 0.5rem;">[ 紧急召集令 ]</div>
+            
+            <div class="divider"></div>
 
-        <div class="cake-box">
-            <div class="candle-container">
-                <div class="mc-candle" data-v="1"><div class="flame"></div></div>
-                <div class="mc-candle" data-v="8"><div class="flame"></div></div>
+            <div class="invitation-text">
+                亲爱的伙伴们：<br>
+                你们被“邀请”参加 <br>
+                <span class="highlight">Davide 的 Lvl.18 成人礼</span><br>
+                这不仅是一场派对，<br>
+                是一次重要的任务集结！
             </div>
-            <div class="cake-body">
-                <div class="cake-frosting"></div>
-                <div class="dots"></div>
-            </div>
-        </div>
 
-        <div style="background:#2a2a2a; border:4px solid #000; padding:15px; width:95%; max-width:360px; display:flex; margin:20px 0; border-style:ridge;">
-            <div style="width:40px; height:40px; border:4px solid #fff; margin-right:15px; flex-shrink:0;"></div>
-            <div>
-                <div style="color:var(--mc-gold); font-size:0.6rem;">进阶: 地球 Online</div>
-                <div style="font-size:0.5rem; margin-top:8px; line-height:1.4;">玩家已解锁: [ 成人阶段 ]<br>主线任务同步中...</div>
+            <div class="cake-display">
+                <div class="mc-cake"></div>
             </div>
-        </div>
 
-        <div class="cmd-panel">
-            <div><span class="c-gray">>> /connect</span> <span class="c-blue">EARTH_ONLINE_SERVER</span></div>
-            <div><span class="c-gray">>> /gamemode</span> <span class="c-red">survival</span></div>
-            <div><span class="c-gray">> /mission</span> <span class="c-green">庆祝 Player:Davide 抵达 Lvl.18</span></div>
-            <div><span class="c-gray">> /locate</span> <span class="c-blue">V. Emerico Amari, 53, Palermo</span></div>
-            <div><span class="c-gray">> /time</span> <span class="c-purple">2026.04.11 | 20:30</span></div>
-            <div><span class="c-gray">> /give</span> <span class="c-green">@all</span> <span class="c-gray">birthday_cake 1</span></div>
+            <div class="reward-section">
+                <div style="font-size: 0.5rem; margin-bottom: 5px;">成功逮捕 Davide 后可获得:</div>
+                <div class="reward-amount">REWARD: 无限畅饮</div>
+                <div style="font-size: 0.45rem; margin-top: 5px;">& 绝佳的生日蛋糕</div>
+            </div>
+
+            <div class="mission-panel">
+                <div>> /locate <span class="c-blue">Rodeo Drive Restaurant</span></div>
+                <div>> /address <span class="c-blue">Via Atenasio, 8, Palermo</span></div>
+                <div>> /time <span style="color:#ff55ff;">2026.04.11 | 20:30</span></div>
+                <div>> /status <span class="c-green">Waiting for you...</span></div>
+            </div>
+
+            <div style="font-size: 0.4rem; color: #8b6b4c; margin-top: 20px;">RSVP: wx_3317847554</div>
         </div>
     </div>
 
-    <div class="hotbar-wrap">
-        <a href="https://maps.app.goo.gl/no5TBBPP844mTQhY6?g_st=ic" target="_blank" class="hotbar-slot">
-            <span style="font-size:0.5rem; text-align:center;">[ 前往任务坐标 (GPS) ]</span>
+    <div class="hotbar">
+        <a href="https://maps.google.com/?q=Via+Atenasio+8+Palermo" target="_blank" class="hotbar-btn">
+            [ 确认任务坐标 (GPS) ]
         </a>
     </div>
 </body>
